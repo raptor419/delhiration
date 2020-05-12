@@ -1,0 +1,10 @@
+{
+    "python.analysis.openFilesOnly": false,
+    "python.autoComplete.extraPaths": [
+        "./"
+    ],
+    "python.linting.pylintArgs": [
+        "--load-plugins=pylint_django"
+    ],
+    "python.pythonPath": "C:\\Anaconda3\\python.exe",
+}

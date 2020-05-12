@@ -1,12 +1,12 @@
 # -*- encoding: utf-8 -*-
-"""
-License: MIT
-Copyright (c) 2019 - present AppSeed.us
-"""
+
+
 
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
+
+from django.contrib.auth import get_user_model
+User = get_user_model()
 
 class LoginForm(forms.Form):
     username = forms.CharField(
@@ -29,6 +29,15 @@ class SignUpForm(UserCreationForm):
         widget=forms.TextInput(
             attrs={
                 "placeholder" : "Username",                
+                "class": "form-control"
+            }
+        ))
+    
+    mobile = forms.RegexField(
+        regex='[1-9][0-9]{9}',
+        widget=forms.NumberInput(
+            attrs={
+                "placeholder": "Mobiel Number",
                 "class": "form-control"
             }
         ))
@@ -56,4 +65,4 @@ class SignUpForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'password1', 'password2')
+        fields = ('username', 'email', 'password1', 'password2', 'mobile')

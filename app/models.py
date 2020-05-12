@@ -1,54 +1,46 @@
 # -*- encoding: utf-8 -*-
-"""
-License: MIT
-Copyright (c) 2019 - present AppSeed.us
-"""
+
 
 from django.db import models
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator
+from django.contrib.auth import get_user_model
 
-class CircleNumber(models.Model):
-    circle_number = models.CharField(primary_key=True, max_length=10, validators=[RegexValidator(r'^\d[0-9]*$')])
-    circle_name = models.TextField(max_length=500, blank=True)
+User = get_user_model()
 
-class FPShop(models.Model):
-    fpshop_number = models.CharField(primary_key=True, max_length=10, validators=[RegexValidator(r'^\d[0-9]*$')])
-    fpshop_name = models.TextField(blank=False)
-    fpshop_address = models.TextField(blank=False)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    # circlenumber = models.IntegerField(blank=True)
-    circlenumber_key = models.ForeignKey('CircleNumber', on_delete=models.CASCADE)
+
+class Circle(models.Model):
+    number = models.PositiveSmallIntegerField(primary_key=True, db_index=True)
+    name = models.TextField(max_length=128, db_index=True, null=True)
+
+class FPS(models.Model):
+    number = models.PositiveSmallIntegerField(primary_key=True, db_index=True)
+    name = models.TextField(blank=False, db_index=True)
+    address = models.TextField(blank=False)
+    user = models.ManyToManyField(User, related_name='FPSs')
+    circle = models.ForeignKey('Circle', on_delete=models.CASCADE)
 
 class RationCard(models.Model):
-    rationcard_number = models.CharField(primary_key=True, max_length=12, validators=[RegexValidator(r'^\d[0-9]*$')])
-    familyhead_name = models.TextField(max_length=100, blank=False)
-    # shop_name = models.IntegerField(blank=True)
-    shop_key = models.ForeignKey('FPShop', on_delete=models.CASCADE)
+    number = models.CharField(primary_key=True, max_length=12, validators=[RegexValidator(r'^[0][0-9]{11}')], db_index=True)
+    number_raw = models.CharField(max_length=12, validators=[RegexValidator(r'^[0][0-9]{11}')], db_index=True)
+    headoffamily = models.TextField(max_length=128, blank=False)
+    # shop = models.ForeignKey('FPS', on_delete=models.CASCADE)
 
 class Locality(models.Model):
-    locality_name = models.TextField(primary_key=True,max_length=500, blank=False)
-    locality_number = models.IntegerField(blank=True)
+    name = models.TextField(max_length=128, db_index=True)
+    number = models.PositiveSmallIntegerField(primary_key=True, db_index=True)
     # circlenumber = models.IntegerField(blank=True)
-    circlenumber_key = models.ForeignKey('CircleNumber', on_delete=models.CASCADE)
+    circle = models.ForeignKey('Circle', on_delete=models.CASCADE)
 
 class Collection(models.Model):
-    collection_id = models.TextField(primary_key=True, max_length=500, blank=False)
-    # rationcard_number = models.TextField(max_length=12, blank=False)
-    collector_name = models.TextField(max_length=100, blank=True)
-    rationcard_key = models.ForeignKey('RationCard', on_delete=models.CASCADE)
-    # locality_name = models.TextField(max_length=500, blank=True)
-    locality_key = models.ForeignKey('Locality', on_delete=models.CASCADE)
-    shop_key = models.IntegerField(blank=True)
-    shop_name = models.ForeignKey('FPShop', on_delete=models.CASCADE)
-    # locality_name = models.TextField(max_length=500, blank=False)
-    locality_key = models.ForeignKey('Locality', on_delete=models.CASCADE)
-    mobile_number =  models.CharField(max_length=10, validators=[RegexValidator(r'^\d{1,10}$')])
-    # shopuser = models.TextField(max_length=100, blank=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    benificiary_name = models.TextField(max_length=100, blank=False)
+    rationcard_number = models.CharField(max_length=12, validators=[RegexValidator(r'^[0][0-9]{11}')], db_index=True)
+    rationcard = models.ForeignKey('RationCard', on_delete=models.CASCADE,blank=True, null=True)
+    locality = models.ForeignKey('Locality', on_delete=models.CASCADE)
+    fps = models.ForeignKey('FPS', on_delete=models.CASCADE)
+    mobile_number =  models.CharField(max_length=10, validators=[RegexValidator(regex='[1-9][0-9]{9}')])
+    entry_made_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    entry_made_at = models.DateTimeField(auto_now_add=True)
 
-class Ration(models.Model):
-    ration_type = models.CharField(max_length=30)
-    quantity = models.CharField(max_length=30)
 
