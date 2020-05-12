@@ -22,7 +22,7 @@ class FPShop(models.Model):
     circlenumber_key = models.ForeignKey('CircleNumber', on_delete=models.CASCADE)
 
 class RationCard(models.Model):
-    rationcard_number = models.CharField(primary_key=True, max_length=12,  min_length=12, validators=[RegexValidator(r'^\d[0-9]*$')])
+    rationcard_number = models.CharField(primary_key=True, max_length=12, validators=[RegexValidator(r'^\d[0-9]*$')])
     familyhead_name = models.TextField(max_length=100, blank=False)
     # shop_name = models.IntegerField(blank=True)
     shop_key = models.ForeignKey('FPShop', on_delete=models.CASCADE)
