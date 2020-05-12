@@ -1,0 +1,30 @@
+{
+  "name": "Delhi Ration ",
+  "version": "1.0.1",
+  "description": "Commercial UI-Ready Django boilerplate.",
+  "scripts": {
+    "lint": "eslint ."
+  },
+  "engines": {
+    "node": "8.11.3"
+  },
+  "devDependencies": {
+    "eslint": "5.0.0",
+    "eslint-config-google": "0.9.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "keywords": [
+    "django",
+    "admin-panel",
+    "black-design",
+    "commercial"
+  ],
+  "author": "Harsh Bandhey",
+  "contributors": [
+    "Harsh Bandhey <raptor419heavy@gmail.com>"
+  ],
+  "license": "Commercial"
+}
