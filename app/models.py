@@ -24,8 +24,8 @@ class FPShop(models.Model):
 class RationCard(models.Model):
     rationcard_number = models.CharField(primary_key=True, max_length=12, validators=[RegexValidator(r'^\d{1,10}$')])
     familyhead_name = models.TextField(max_length=100, blank=False)
-    shop_name = models.IntegerField(blank=True)
-    # shop_key = models.ForeignKey('FPShop', on_delete=models.CASCADE)
+    # shop_name = models.IntegerField(blank=True)
+    shop_key = models.ForeignKey('FPShop', on_delete=models.CASCADE)
 
 class Locality(models.Model):
     locality_name = models.TextField(primary_key=True,max_length=500, blank=False)
@@ -46,7 +46,7 @@ class Collection(models.Model):
     locality_key = models.ForeignKey('Locality', on_delete=models.CASCADE)
     mobile_number =  models.CharField(max_length=10, validators=[RegexValidator(r'^\d{1,10}$')])
     # shopuser = models.TextField(max_length=100, blank=True)
-    shopuser_key = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
 class Ration(models.Model):
     ration_type = models.CharField(max_length=30)
