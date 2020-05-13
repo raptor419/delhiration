@@ -18,13 +18,14 @@ class FPS(models.Model):
     number = models.PositiveSmallIntegerField(primary_key=True, db_index=True)
     name = models.TextField(blank=False, db_index=True)
     address = models.TextField(blank=False)
-    user = models.ManyToManyField(User, related_name='FPSs')
+    user = models.ManyToManyField(User, related_name='fps_set')
     circle = models.ForeignKey('Circle', on_delete=models.CASCADE)
 
 class RationCard(models.Model):
     number = models.CharField(primary_key=True, max_length=12, validators=[RegexValidator(r'^[0][0-9]{11}')], db_index=True)
     number_raw = models.CharField(max_length=12, validators=[RegexValidator(r'^[0][0-9]{11}')], db_index=True)
     headoffamily = models.TextField(max_length=128, blank=False)
+    phone = models.TextField(max_length=128, blank=False)
     # shop = models.ForeignKey('FPS', on_delete=models.CASCADE)
 
 class Locality(models.Model):

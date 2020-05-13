@@ -25,9 +25,11 @@
 			<nav class="navbar navbar-header navbar-expand-lg" data-background-color="blue2">
 				
 				{% if user.is_authenticated %}
+					
 
 					<div class="container-fluid">
-						<div class="collapse" id="search-nav">
+						<!-- {% if user.FPAcreds %}
+							<div class="collapse" id="search-nav">
 							<form class="navbar-left navbar-form nav-search mr-md-3">
 								<div class="input-group">
 									<div class="input-group-prepend">
@@ -38,7 +40,8 @@
 									<input type="text" placeholder="Search ..." class="form-control">
 								</div>
 							</form>
-						</div>
+							</div>
+						{% endif %} -->
 						<ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
 							<li class="nav-item dropdown hidden-caret">
 								<a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
@@ -61,7 +64,7 @@
 												<a class="col-6 col-md-4 p-0" href="#">
 													<div class="quick-actions-item">
 														<i class="flaticon-database"></i>
-														<span class="text">View Orders</span>
+														<span class="text">View Collections</span>
 													</div>
 												</a>
 												<a class="col-6 col-md-4 p-0" href="#">
@@ -108,7 +111,7 @@
 							</li>
 						</ul>
 					</div>
-
+					
 				{% endif %}
 				
 			</nav>

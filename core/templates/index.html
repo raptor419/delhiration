@@ -10,18 +10,101 @@
     <!-- (Almost) A blank page -->
     <div class="panel-header bg-primary-gradient">
         <div class="page-inner py-5">
-            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+            <div class="align-items-left align-items-md-center flex-column flex-md-row">
                 <div>
                     <h2 class="text-white pb-2 fw-bold">Ration Moniter</h2>
                     <h5 class="text-white op-7 mb-2">Delhi Government Ration Monitoring Dashboard</h5>
                 </div>
+
+                {% if user.FPScreds %}
                 <div class="ml-md-auto py-2 py-md-0">
                     <a href="#" class="btn btn-white btn-border btn-round mr-2">Manage</a>
-                    <a href="#" class="btn btn-secondary btn-round">Add Customer</a>
+                    <a href="#" class="btn btn-secondary btn-round">Add Collection</a>
                 </div>
+                {% endif %}
             </div>
         </div>
-    </div>
+     </div>
+        {% if user.FPScreds %}
+        <div class="page-inner mt--5">
+            <div class="row row-card-no-pd md--2">
+                <div class="col-sm-6 col-md-12">
+                    <div class="card card-stats card-round">
+                        <form method="post" action="">
+                            {% csrf_token %}
+                        <div class="card-body ">
+                            <p class="card-category">Enter Details</p>
+                            <div class="row">
+                                <div class="col-md-3 col-sm-0 col-stats">
+                                    <div class="numbers">
+                                        
+                                        <h4 class="card-title">Ration Card No</h4>
+                                    </div>
+                                </div>
+                                <div class="col-md-7 col-sm-12">
+                                    <div class="form-group">
+                                        <div class="input-group mb-3">
+                                            {{ form.rationcard_rx }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 col-sm-12">
+                                    <div class="form-group">
+                                        <div class="input-group mb-3">
+                                        <p class="card-category"></p>
+                                        <button type="submit" class="btn btn-success">Submit</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-title">
+                                    {% if msg %}
+                                        {% if msg != 'Found' %}
+                                            <p class="text-danger">{{ msg | safe }}</p>
+                                        {% else %}
+                                            <p class="text-success">{{ msg | safe }}</p>
+                                        {% endif %}
+                                    {% endif %}
+                                </div>   
+                            </div>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% if found %}
+                <div class="page-inner mt">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Benificary Details Table</div>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Ration #</th>
+                                        <th scope="col">Head of Family</th>
+                                        <th scope="col">Mobile No</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>{{ found.number }}</td>
+                                        <td>{{ found.headoffamily }}</td>
+                                        <td>{{ found.phone }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            {% endif %}            
+
+        </div>
+        {% endif %}
+    
 
 {% endblock content %}
 
